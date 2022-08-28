@@ -30,6 +30,10 @@ export const UserDetails = (props: UserDetailsOptions) => {
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    form.resetFields();
+  }, [user]);
+
   const onCancel = () => {
     form.resetFields();
     setIsChanged(false);

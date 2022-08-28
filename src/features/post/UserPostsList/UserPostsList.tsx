@@ -13,13 +13,29 @@ import { Space } from "antd";
 
 export const UserPostsList = () => {
   const params = useParams();
-  const userId: number = params.userId !== undefined ? +params.userId : 0;
-  const user = useAppSelector(selectUsers).find((user) => user.id === userId);
-
   const posts = useAppSelector(selectPosts);
   const dispatch = useAppDispatch();
 
+  const [user, setUser] = useState<IUser>();
+
+  const userId: number = params.userId !== undefined ? +params.userId : 0;
+  let userStore = useAppSelector(selectUsers).find(
+    (user) => user.id === userId
+  );
+  const getUserAsync = async () => {
+    return await getUser({ userId });
+  };
+
   useEffect(() => {
+    if (userStore === undefined) {
+      getUserAsync().then((response) => {
+        const user: IUser = response.data as IUser;
+        setUser(user);
+      });
+    } else {
+      setUser(userStore);
+    }
+
     dispatch(getUserPostsAsync(userId));
   }, []);
 
