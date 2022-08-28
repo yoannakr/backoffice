@@ -10,7 +10,7 @@ export interface UsersState {
 
 const initialState: UsersState = {
   users: [],
-  status: "idle",
+  status: "loading",
 };
 
 export const getUsersAsync = createAsyncThunk("users/getUsers", async () => {
@@ -60,5 +60,6 @@ export const usersSlice = createSlice({
 export const { editUser } = usersSlice.actions;
 
 export const selectUsers = (state: RootState) => state.users.users;
+export const selectUserStatus = (state: RootState) => state.users.status;
 
 export default usersSlice.reducer;

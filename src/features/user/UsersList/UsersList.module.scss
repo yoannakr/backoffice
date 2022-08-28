@@ -1,3 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Qwitcher+Grypen:wght@700&display=swap");
+
 .UsersList {
-  margin: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(#f4f1e9, #def1fa);
+  padding: 2em;
+}
+
+.Container {
+  width: 80vw;
+}
+
+.Title {
+  text-align: center;
+  font-size: 4em;
+  font-family: "Qwitcher Grypen", cursive;
+}
+
+.ErrorContainer {
+  text-align: center;
+  font-size: 2em;
+  font-family: "Qwitcher Grypen", cursive;
 }
