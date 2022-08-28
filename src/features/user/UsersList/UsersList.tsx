@@ -28,19 +28,6 @@ export const UsersList = () => {
           </Panel>
         ))}
       </Collapse>
-      <button aria-label="Get users" onClick={() => dispatch(getUsersAsync())}>
-        Get users
-      </button>
-      <button
-        aria-label="Get users"
-        onClick={() => {
-          const user = { ...users[1], name: "test" };
-
-          dispatch(editUser(user));
-        }}
-      >
-        edit
-      </button>
     </div>
   );
 };

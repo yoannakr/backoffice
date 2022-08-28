@@ -1,11 +1,5 @@
 import React, { useEffect } from "react";
 import "antd/dist/antd.css";
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
-import { Avatar, Card } from "antd";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
@@ -16,8 +10,6 @@ import {
 import { UserDetails } from "../../user/UserDetails/UserDetails";
 import { selectUsers } from "../../user/userSlice";
 import { UserPost } from "../UserPost/UserPost";
-
-const { Meta } = Card;
 
 export const UserPostsList = () => {
   const params = useParams();
@@ -37,26 +29,6 @@ export const UserPostsList = () => {
       {posts.map((post) => (
         <UserPost key={post.id} post={post} />
       ))}
-
-      <button
-        aria-label="Get users"
-        onClick={() => dispatch(getUserPostsAsync(userId))}
-      >
-        Get posts
-      </button>
-      {posts.map((post) => (
-        <li key={post.id}>{post.title}</li>
-      ))}
-      <button
-        aria-label="Get users"
-        onClick={() => {
-          const post = { ...posts[1], title: "test" };
-
-          dispatch(editUserPostAsync(post));
-        }}
-      >
-        edit
-      </button>
     </div>
   );
 };
