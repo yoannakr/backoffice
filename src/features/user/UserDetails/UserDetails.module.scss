@@ -1,0 +1,17 @@
+@use "../../../App.scss" as main;
+
+.Form {
+  display: flex;
+  flex-direction: column;
+  margin: 1em;
+}
+
+.CancelButton {
+  background-color: red;
+  border: 1px solid red;
+}
+
+.CancelButton:hover {
+  background-color: main.$cancel-hover-color;
+  border: 1px solid main.$cancel-hover-color;
+}
