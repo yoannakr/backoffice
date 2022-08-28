@@ -42,7 +42,7 @@ export const UserPost = (props: UserPostOptions) => {
   return (
     <Card
       className={styles.Card}
-      cover={<img alt="card cover" src="https://random.imagecdn.app/500/150" />}
+      cover={<img alt="card cover" src="https://random.imagecdn.app/500/200" />}
       actions={[
         <EditOutlined key="edit" onClick={() => setIsEditMode(true)} />,
         <DeleteOutlined key="delete" onClick={() => onDelete()} />,
