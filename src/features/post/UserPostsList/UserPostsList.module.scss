@@ -1,0 +1,23 @@
+@use "../../../App.scss" as main;
+
+.Container {
+  background: main.$main-background;
+}
+
+.UserDetails {
+  background-color: white;
+  border-radius: 2em;
+  padding: 1em;
+  margin: 3em;
+}
+
+.UserPosts {
+  display: flex;
+  justify-content: center;
+}
+
+.Title {
+  text-align: center;
+  font-size: 4em;
+  font-family: "Qwitcher Grypen", cursive;
+}

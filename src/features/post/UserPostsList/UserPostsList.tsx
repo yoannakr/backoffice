@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "antd/dist/antd.css";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import {
-  getUserPostsAsync,
-  editUserPostAsync,
-  selectPosts,
-} from "../postSlice";
+import { getUserPostsAsync, selectPosts } from "../postSlice";
 import { UserDetails } from "../../user/UserDetails/UserDetails";
 import { selectUsers } from "../../user/userSlice";
 import { UserPost } from "../UserPost/UserPost";
+import { IUser } from "../../../types/user";
+import { getUser } from "../../user/userAPI";
+import styles from "./UserPostsList.module.scss";
+import { Space } from "antd";
 
 export const UserPostsList = () => {
   const params = useParams();
@@ -24,11 +24,23 @@ export const UserPostsList = () => {
   }, []);
 
   return (
-    <div>
-      <UserDetails user={user} />
-      {posts.map((post) => (
-        <UserPost key={post.id} post={post} />
-      ))}
+    <div className={styles.Container}>
+      <h1 className={styles.Title}>User Details</h1>
+      <div className={styles.UserDetails}>
+        <UserDetails user={user} />
+      </div>
+      <h1 className={styles.Title}>User Posts</h1>
+      <Space
+        className={styles.UserPosts}
+        direction="horizontal"
+        wrap={true}
+        align={"center"}
+        size="large"
+      >
+        {posts.map((post) => (
+          <UserPost key={post.id} post={post} />
+        ))}
+      </Space>
     </div>
   );
 };
