@@ -1,15 +1,4 @@
-@use "../../../App.scss" as main;
-
-.Button {
-  width: 90px;
-}
-
-.CancelButton {
-  background-color: red;
-  border: 1px solid red;
-}
-
-.CancelButton:hover {
-  background-color: main.$cancel-hover-color;
-  border: 1px solid main.$cancel-hover-color;
+.Card {
+  width: 400px;
+  height: 400px;
 }
