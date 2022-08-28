@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 import { UserDetails } from "../UserDetails/UserDetails";
 import { getUsersAsync, selectUsers, selectUserStatus } from "../userSlice";
 import "antd/dist/antd.css";
-import { Collapse, Spin } from "antd";
+import { Collapse, Pagination, Spin } from "antd";
 import styles from "./UsersList.module.scss";
 import { Link } from "react-router-dom";
 import { ErrorSvg } from "../../../common/svgs/ErrorSvg";
@@ -15,10 +15,23 @@ export const UsersList = () => {
   const users = useAppSelector(selectUsers);
   const status = useAppSelector(selectUserStatus);
   const dispatch = useAppDispatch();
+  const pageSize = 10;
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [minIndex, setMinIndex] = useState<number>(0);
+  const [maxIndex, setMaxIndex] = useState<number>(0);
 
   useEffect(() => {
-    dispatch(getUsersAsync());
+    dispatch(getUsersAsync()).then(() => {
+      setMaxIndex(pageSize);
+    });
   }, []);
+
+  const onPaginationChange = (page: number) => {
+    setCurrentPage(page);
+    setMinIndex((page - 1) * pageSize);
+    setMaxIndex(page * pageSize);
+  };
 
   return (
     <div className={styles.UsersList}>
@@ -27,13 +40,24 @@ export const UsersList = () => {
         <div className={styles.Container}>
           <h1 className={styles.Title}>Users</h1>
           <Collapse>
-            {users.map((user) => (
-              <Panel header={user.name} key={user.id}>
-                <UserDetails user={user} />
-                <Link to={`/userPosts/${user?.id}`}>See Posts</Link>
-              </Panel>
-            ))}
+            {users.map(
+              (user, index) =>
+                index >= minIndex &&
+                index < maxIndex && (
+                  <Panel header={user.name} key={user.id}>
+                    <UserDetails user={user} />
+                    <Link to={`/userPosts/${user?.id}`}>See Posts</Link>
+                  </Panel>
+                )
+            )}
           </Collapse>
+          <Pagination
+            className={styles.Pagination}
+            pageSize={pageSize}
+            current={currentPage}
+            total={users.length}
+            onChange={onPaginationChange}
+          />
         </div>
       )}
       {status === "failed" && (
