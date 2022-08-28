@@ -8,6 +8,7 @@ import { Collapse, Pagination, Spin } from "antd";
 import styles from "./UsersList.module.scss";
 import { Link } from "react-router-dom";
 import { ErrorSvg } from "../../../common/svgs/ErrorSvg";
+import { EmptySvg } from "../../../common/svgs/EmptySvg";
 
 const { Panel } = Collapse;
 
@@ -36,7 +37,7 @@ export const UsersList = () => {
   return (
     <div className={styles.UsersList}>
       {status === "loading" && <Spin size="large" />}
-      {status === "idle" && (
+      {status === "idle" && users.length !== 0 && (
         <div className={styles.Container}>
           <h1 className={styles.Title}>Users</h1>
           <Collapse>
@@ -64,6 +65,12 @@ export const UsersList = () => {
         <div className={styles.ErrorContainer}>
           <ErrorSvg width={600} height={500} />
           <h1>Oops an unexpected error occurred</h1>
+        </div>
+      )}
+      {status === "idle" && users.length === 0 && (
+        <div className={styles.ErrorContainer}>
+          <EmptySvg width={600} height={500} />
+          <h1>No available users</h1>
         </div>
       )}
     </div>
