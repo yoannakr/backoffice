@@ -10,7 +10,7 @@ export interface PostsState {
 
 const initialState: PostsState = {
   posts: [],
-  status: "idle",
+  status: "loading",
 };
 
 export const getUserPostsAsync = createAsyncThunk(

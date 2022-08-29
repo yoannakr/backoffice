@@ -1,10 +1,23 @@
 @use "../../../App.scss" as main;
 
 .Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
   background: main.$main-background;
 }
 
+.UserPostsList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .UserDetails {
+  width: 80%;
   background-color: white;
   border-radius: 2em;
   padding: 1em;
@@ -19,5 +32,11 @@
 .Title {
   text-align: center;
   font-size: 4em;
+  font-family: "Qwitcher Grypen", cursive;
+}
+
+.ErrorContainer {
+  text-align: center;
+  font-size: 2em;
   font-family: "Qwitcher Grypen", cursive;
 }
