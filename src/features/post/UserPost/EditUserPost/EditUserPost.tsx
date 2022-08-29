@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import "antd/dist/antd.css";
 import { Button, Col, Form, Input, Row } from "antd";
-import { useAppDispatch } from "../../../../app/hooks";
-import { editUserPostAsync } from "../../postSlice";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { editUserPostAsync, selectStatus } from "../../postSlice";
 import { IPost } from "../../../../types/post";
 import styles from "./EditUserPost.module.scss";
 import "../../../../App.scss";
 import TextArea from "antd/lib/input/TextArea";
+import { showErrorWindow } from "../../../../common/showErrorWindow";
 
 type EditUserPostOptions = {
   post: IPost;
@@ -15,6 +16,7 @@ type EditUserPostOptions = {
 
 export const EditUserPost = (props: EditUserPostOptions) => {
   const dispatch = useAppDispatch();
+  const status = useAppSelector(selectStatus);
   const { post, onEditModeChange } = props;
 
   const [title, setTitle] = useState<string>(post.title);
@@ -30,7 +32,11 @@ export const EditUserPost = (props: EditUserPostOptions) => {
 
     setIsSaving(true);
     await dispatch(editUserPostAsync(newUserPost));
-    onEditModeChange(false);
+    if (status === "failed") {
+      showErrorWindow("An error occurred while updating the user post.");
+    } else {
+      onEditModeChange(false);
+    }
     setIsSaving(false);
   };
 

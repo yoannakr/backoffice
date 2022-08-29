@@ -12,6 +12,7 @@ import { IPost } from "../../../types/post";
 import styles from "./UserPost.module.scss";
 import "../../../App.scss";
 import { EditUserPost } from "./EditUserPost/EditUserPost";
+import { showErrorWindow } from "../../../common/showErrorWindow";
 
 const { Meta } = Card;
 
@@ -26,16 +27,6 @@ export const UserPost = (props: UserPostOptions) => {
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
-  const onError = () => {
-    Modal.error({
-      title: "Error",
-      icon: <ExclamationCircleOutlined />,
-      content: `An error occurred while deleting the user post.`,
-      centered: true,
-      okText: "OK",
-    });
-  };
-
   const onDelete = () => {
     Modal.confirm({
       title: "Warning",
@@ -47,7 +38,7 @@ export const UserPost = (props: UserPostOptions) => {
       onOk: async () => {
         await dispatch(deleteUserPostAsync(post.id));
         if (status === "failed") {
-          onError();
+          showErrorWindow("An error occurred while deleting the user post.");
         }
       },
     });
@@ -58,8 +49,16 @@ export const UserPost = (props: UserPostOptions) => {
       className={styles.Card}
       cover={<img alt="card cover" src="https://random.imagecdn.app/500/200" />}
       actions={[
-        <EditOutlined key="edit" onClick={() => setIsEditMode(true)} />,
-        <DeleteOutlined key="delete" onClick={() => onDelete()} />,
+        <EditOutlined
+          key="edit"
+          onClick={() => setIsEditMode(true)}
+          disabled={isEditMode}
+        />,
+        <DeleteOutlined
+          key="delete"
+          onClick={() => onDelete()}
+          disabled={isEditMode}
+        />,
       ]}
     >
       {!isEditMode ? (
