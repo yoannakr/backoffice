@@ -6,8 +6,8 @@ import {
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
 import { Avatar, Card, Modal } from "antd";
-import { useAppDispatch } from "../../../app/hooks";
-import { deleteUserPostAsync } from "../postSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { deleteUserPostAsync, selectStatus } from "../postSlice";
 import { IPost } from "../../../types/post";
 import styles from "./UserPost.module.scss";
 import "../../../App.scss";
@@ -21,20 +21,34 @@ type UserPostOptions = {
 
 export const UserPost = (props: UserPostOptions) => {
   const dispatch = useAppDispatch();
+  const status = useAppSelector(selectStatus);
   const { post } = props;
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
+
+  const onError = () => {
+    Modal.error({
+      title: "Error",
+      icon: <ExclamationCircleOutlined />,
+      content: `An error occurred while deleting the user post.`,
+      centered: true,
+      okText: "OK",
+    });
+  };
 
   const onDelete = () => {
     Modal.confirm({
       title: "Warning",
       icon: <ExclamationCircleOutlined />,
-      content: `Are you sure you want to delete post with title: ${post.title}?`,
+      content: `Are you sure delete post with title: ${post.title}?`,
       centered: true,
       okText: "Yes",
       cancelText: "No",
-      onOk: () => {
-        dispatch(deleteUserPostAsync(post.id));
+      onOk: async () => {
+        await dispatch(deleteUserPostAsync(post.id));
+        if (status === "failed") {
+          onError();
+        }
       },
     });
   };
