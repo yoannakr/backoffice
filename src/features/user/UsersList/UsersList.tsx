@@ -9,7 +9,7 @@ import styles from "./UsersList.module.scss";
 import { Link } from "react-router-dom";
 import { ErrorSvg } from "../../../shared/svgs/ErrorSvg";
 import { EmptySvg } from "../../../shared/svgs/EmptySvg";
-import { BOPagination } from "../../../shared/components/antd/Navigation/Pagination/BOPagination";
+import { BOPagination } from "../../../shared/components";
 
 const { Panel } = Collapse;
 
