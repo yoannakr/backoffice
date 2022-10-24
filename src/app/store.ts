@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import usersReducer from "../features/user/userSlice";
 import postsReducer from "../features/post/postSlice";
+import tasksReducer from "../features/tasks/features/TasksGrid/tasksGridSlice";
 
 export const store = configureStore({
   reducer: {
     users: usersReducer,
     posts: postsReducer,
+    tasks: tasksReducer,
   },
 });
 
