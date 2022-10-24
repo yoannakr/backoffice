@@ -4,11 +4,12 @@ import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 import { UserDetails } from "../UserDetails/UserDetails";
 import { getUsersAsync, selectUsers, selectUserStatus } from "../userSlice";
 import "antd/dist/antd.css";
-import { Collapse, Pagination, Spin } from "antd";
+import { Collapse, Spin } from "antd";
 import styles from "./UsersList.module.scss";
 import { Link } from "react-router-dom";
 import { ErrorSvg } from "../../../shared/svgs/ErrorSvg";
 import { EmptySvg } from "../../../shared/svgs/EmptySvg";
+import { BOPagination } from "../../../shared/components/antd/Navigation/Pagination/BOPagination";
 
 const { Panel } = Collapse;
 
@@ -52,12 +53,12 @@ export const UsersList = () => {
                 )
             )}
           </Collapse>
-          <Pagination
+          <BOPagination
             className={styles.Pagination}
             pageSize={pageSize}
-            current={currentPage}
-            total={users.length}
-            onChange={onPaginationChange}
+            currentPage={currentPage}
+            totalPages={users.length}
+            onPaginationChange={onPaginationChange}
           />
         </div>
       )}
