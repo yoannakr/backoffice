@@ -12,7 +12,7 @@ import { IPost } from "../../../types/post";
 import styles from "./UserPost.module.scss";
 import "../../../App.scss";
 import { EditUserPost } from "./EditUserPost/EditUserPost";
-import { showErrorWindow } from "../../../common/showErrorWindow";
+import { showErrorWindow } from "../../../shared/showErrorWindow";
 
 const { Meta } = Card;
 

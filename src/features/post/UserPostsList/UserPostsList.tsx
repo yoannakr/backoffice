@@ -10,8 +10,8 @@ import { IUser } from "../../../types/user";
 import { getUser } from "../../user/userAPI";
 import styles from "./UserPostsList.module.scss";
 import { Space, Spin } from "antd";
-import { EmptySvg } from "../../../common/svgs/EmptySvg";
-import { ErrorSvg } from "../../../common/svgs/ErrorSvg";
+import { EmptySvg } from "../../../shared/svgs/EmptySvg";
+import { ErrorSvg } from "../../../shared/svgs/ErrorSvg";
 
 export const UserPostsList = () => {
   const params = useParams();

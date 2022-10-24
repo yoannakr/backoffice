@@ -7,7 +7,7 @@ import { IPost } from "../../../../types/post";
 import styles from "./EditUserPost.module.scss";
 import "../../../../App.scss";
 import TextArea from "antd/lib/input/TextArea";
-import { showErrorWindow } from "../../../../common/showErrorWindow";
+import { showErrorWindow } from "../../../../shared/showErrorWindow";
 
 type EditUserPostOptions = {
   post: IPost;

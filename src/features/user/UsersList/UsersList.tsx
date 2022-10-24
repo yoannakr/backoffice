@@ -7,8 +7,8 @@ import "antd/dist/antd.css";
 import { Collapse, Pagination, Spin } from "antd";
 import styles from "./UsersList.module.scss";
 import { Link } from "react-router-dom";
-import { ErrorSvg } from "../../../common/svgs/ErrorSvg";
-import { EmptySvg } from "../../../common/svgs/EmptySvg";
+import { ErrorSvg } from "../../../shared/svgs/ErrorSvg";
+import { EmptySvg } from "../../../shared/svgs/EmptySvg";
 
 const { Panel } = Collapse;
 
