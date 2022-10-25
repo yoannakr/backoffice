@@ -15,7 +15,7 @@ export const BOInput = (props: BOInputProps) => {
   return (
     <>
       {props.label && <label>{props.label}</label>}
-      <Input {...props} onChange={onChange} />{" "}
+      <Input {...props} onChange={onChange} />
     </>
   );
 };
