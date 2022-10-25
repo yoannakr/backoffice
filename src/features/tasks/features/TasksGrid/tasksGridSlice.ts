@@ -23,6 +23,7 @@ export const tasksGridSlice = createSlice({
       state.tasks = tasks;
     },
     fetchTasksFailure(state, action) {
+      //TODO:
       console.log("Test" + action.payload);
     },
   },
@@ -31,9 +32,11 @@ export const tasksGridSlice = createSlice({
 export const { fetchTasksSuccess, fetchTasksFailure } = tasksGridSlice.actions;
 
 export const fetchTasks =
-  () => async (dispatch: any, getState: () => RootState) => {
+  (params?: { title?: string; userId?: number; completed?: boolean }) =>
+  async (dispatch: any, getState: () => RootState) => {
     try {
-      const response = await fetchTasksAPI();
+      console.log("Fetch tasks");
+      const response = await axios.get("/todos", { params: { ...params } });
       const mappedTasks = response.data.map(
         (task: any): ITask => ({
           id: task.id,

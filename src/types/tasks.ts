@@ -4,3 +4,8 @@ export interface ITask {
   userId: number;
   isCompleted: boolean;
 }
+
+export enum TaskStatusType {
+  COMPLETED = "Completed",
+  NOTCOMPLETED = "NotCompleted",
+}
