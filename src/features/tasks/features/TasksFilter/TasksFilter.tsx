@@ -1,5 +1,5 @@
 import React from "react";
-import { BOInput, Row } from "../../../../shared/components";
+import { BOInput, Row, BOSelect } from "../../../../shared/components";
 import styles from "./TasksFilter.module.scss";
 
 export const TasksFilter = () => {
@@ -12,7 +12,7 @@ export const TasksFilter = () => {
         <BOInput label="Username" placeholder="Username" />
       </Row>
       <Row className={styles.Row}>
-        <BOInput label="Status" placeholder="Status" />
+        <BOSelect label="Status" placeholder="Status" />
       </Row>
     </div>
   );
