@@ -14,7 +14,7 @@ import styles from "./TasksFilter.module.scss";
 import { BOButton } from "../../../../shared/components";
 
 export const TasksFilter = () => {
-  const usersOptions = useUsersOptions();
+  const { usersOptions, loading } = useUsersOptions();
 
   const dispatch = useAppDispatch();
   const tasks = useAppSelector(selectTasks);
@@ -107,6 +107,7 @@ export const TasksFilter = () => {
             placeholder="User"
             value={userId}
             options={usersOptions}
+            loading={loading}
             onChange={handleUserChange}
           />
         </Row>

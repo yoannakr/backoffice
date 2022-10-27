@@ -6,11 +6,13 @@ export interface IUserOption {
   value: string;
 }
 
-export const useUsersOptions = (): IUserOption[] => {
+export const useUsersOptions = () => {
   const [usersOptions, setUsersOptions] = useState<IUserOption[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchUsersOptions = async () => {
+      setLoading(true);
       try {
         const response = await getUsers();
         const mappedOptions = response.data.map(
@@ -20,11 +22,14 @@ export const useUsersOptions = (): IUserOption[] => {
           })
         );
         setUsersOptions(mappedOptions);
-      } catch (error) {}
+      } catch (error) {
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchUsersOptions();
   }, []);
 
-  return usersOptions;
+  return { usersOptions, loading };
 };
