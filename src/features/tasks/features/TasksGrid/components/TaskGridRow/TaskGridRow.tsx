@@ -5,8 +5,10 @@ import { changeTaskStatus } from "../../tasksGridSlice";
 import {
   BorderOutlined,
   CheckSquareOutlined,
+  UserOutlined,
   CopyOutlined,
 } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 interface Props {
   task: ITask;
@@ -38,12 +40,22 @@ export const TaskGridRow = (props: Props) => {
       <td style={{ textAlign: "center" }}>{task.id}</td>
       <td>{task.title}</td>
       <td style={{ textAlign: "center" }}>
-        <BOButton
-          icon={<CopyOutlined />}
-          style={{ border: "transparent" }}
-          title={`Copy User Id: ${task.userId}`}
-          onClick={handleCopyUserId}
-        />
+        <>
+          <Link to={`/user/${task.userId}`} target="_blank">
+            <BOButton
+              icon={<UserOutlined />}
+              style={{ border: "transparent" }}
+              title={`View user profile`}
+            />
+          </Link>
+
+          <BOButton
+            icon={<CopyOutlined />}
+            style={{ border: "transparent" }}
+            title={`Copy User Id: ${task.userId}`}
+            onClick={handleCopyUserId}
+          />
+        </>
       </td>
       <td style={{ textAlign: "center" }}>
         {task.isCompleted ? (
