@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useAppSelector } from "../../../../app/hooks";
-import { BOPagination } from "../../../../shared/components/antd/Navigation/Pagination/BOPagination";
+import { BOPagination } from "../../../../shared/components";
 import { ITask } from "../../../../types/tasks";
 import { BOTable } from "./components/Table/BOTable";
 import { tableColumns } from "./tableColumns";

@@ -2,7 +2,11 @@ import { useAppDispatch } from "../../../../../../app/hooks";
 import { BOButton, BOTag, Modal } from "../../../../../../shared/components";
 import { ITask } from "../../../../../../types/tasks";
 import { changeTaskStatus } from "../../tasksGridSlice";
-import { BorderOutlined, CheckSquareOutlined } from "@ant-design/icons";
+import {
+  BorderOutlined,
+  CheckSquareOutlined,
+  CopyOutlined,
+} from "@ant-design/icons";
 
 interface Props {
   task: ITask;
@@ -10,6 +14,10 @@ interface Props {
 export const TaskGridRow = (props: Props) => {
   const { task } = props;
   const dispatch = useAppDispatch();
+
+  const handleCopyUserId = () => {
+    navigator.clipboard.writeText(task.userId.toString());
+  };
 
   const handleStatusChange = () => {
     Modal.confirm({
@@ -29,8 +37,15 @@ export const TaskGridRow = (props: Props) => {
     <tr key={task.id}>
       <td style={{ textAlign: "center" }}>{task.id}</td>
       <td>{task.title}</td>
-      <td>{task.userId}</td>
-      <td>
+      <td style={{ textAlign: "center" }}>
+        <BOButton
+          icon={<CopyOutlined />}
+          style={{ border: "transparent" }}
+          title={`Copy User Id: ${task.userId}`}
+          onClick={handleCopyUserId}
+        />
+      </td>
+      <td style={{ textAlign: "center" }}>
         {task.isCompleted ? (
           <BOTag style={{ background: "#85cc6e" }}>Completed</BOTag>
         ) : (
