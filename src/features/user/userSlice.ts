@@ -35,8 +35,8 @@ export const usersSlice = createSlice({
       newUsers[index] = action.payload;
 
       return {
-        ...state, //copying the orignal state
-        users: newUsers, //reassingning todos to new array
+        ...state,
+        users: newUsers,
       };
     },
   },

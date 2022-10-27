@@ -1,15 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { useAppSelector } from "../../../../app/hooks";
-import { BOPagination } from "../../../../shared/components";
+import { BOPagination, BOSpin } from "../../../../shared/components";
 import { ITask } from "../../../../types/tasks";
 import { BOTable } from "./components/Table/BOTable";
 import { tableColumns } from "./tableColumns";
-import { selectFilteredTasks } from "./tasksGridSlice";
+import { selectFilteredTasks, selectStatus } from "./tasksGridSlice";
 import styles from "./TasksGrid.module.scss";
 import { TaskGridRow } from "./components/TaskGridRow/TaskGridRow";
 
 export const TasksGrid = () => {
   const filteredTasks = useAppSelector(selectFilteredTasks);
+  const status = useAppSelector(selectStatus);
   const pageSize = 10;
 
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -39,7 +40,10 @@ export const TasksGrid = () => {
 
   return (
     <>
-      {displayTasks.length !== 0 && (
+      {status === "loading" && (
+        <BOSpin className={styles.CenterContainer} size="large" />
+      )}
+      {status === "idle" && displayTasks.length !== 0 ? (
         <div className={styles.TasksGridContainer}>
           <BOTable columns={tableColumns}>
             {displayTasks.map((task) => (
@@ -54,6 +58,11 @@ export const TasksGrid = () => {
             showSizeChanger={false}
           />
         </div>
+      ) : (
+        <h1 className={styles.CenterContainer}>No data found.</h1>
+      )}
+      {status === "failed" && (
+        <h1 className={styles.CenterContainer}>Error fetching data.</h1>
       )}
     </>
   );

@@ -1,5 +1,5 @@
 import { useAppDispatch } from "../../../../../../app/hooks";
-import { BOButton, BOTag, Modal } from "../../../../../../shared/components";
+import { BOButton, BOTag, BOModal } from "../../../../../../shared/components";
 import { ITask } from "../../../../../../types/tasks";
 import { changeTaskStatus } from "../../tasksGridSlice";
 import {
@@ -22,7 +22,7 @@ export const TaskGridRow = (props: Props) => {
   };
 
   const handleStatusChange = () => {
-    Modal.confirm({
+    BOModal.confirm({
       title: (
         <span>
           Do you want to change status of <i>{task.title}</i>?
