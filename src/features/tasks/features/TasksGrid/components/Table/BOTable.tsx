@@ -3,14 +3,12 @@ import styles from "./BOTable.module.scss";
 interface BOTableProps {
   columns: string[];
   children: any;
-  style?: React.CSSProperties;
   onChange?: (value: string) => void;
 }
 
 export const BOTable = (props: BOTableProps) => {
-  const { columns, children, style } = props;
+  const { columns, children } = props;
 
-  //TODO: {...style}
   return (
     <table className={styles.Table}>
       <thead>

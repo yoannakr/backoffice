@@ -1,4 +1,16 @@
-.Table,
-.TableData {
-  border: 1px solid #333;
+.Table {
+  background-color: white;
+  border-radius: 2em;
+  border: 2px solid #ddd;
+  min-width: 80%;
+  border-collapse: separate;
+  margin-bottom: 1em;
+}
+
+.Table td,
+.Table th {
+  padding: 1em;
+  border-style: hidden;
+  border-collapse: initial;
+  border: 1px solid #ddd;
 }
