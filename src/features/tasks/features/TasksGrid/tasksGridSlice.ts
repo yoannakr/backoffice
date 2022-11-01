@@ -1,61 +1,82 @@
-import { ITask } from "./../../../../types/tasks";
+import { Filter, ITask } from "./../../../../types/tasks";
 import { axios } from "./../../../../lib/axios";
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../../../app/store";
+import { isTaskMatchFilter } from "./utils/isTaskMatchFilter";
+import { isFilterApplied } from "./utils/isFilterApplied";
 
 export interface TasksState {
+  hasFetched: boolean;
   tasks: ITask[];
   filteredTasks: ITask[];
+  filter: Filter;
   status: "idle" | "loading" | "failed";
 }
 
 const initialState: TasksState = {
+  hasFetched: false,
   tasks: [],
   filteredTasks: [],
-  status: "loading",
+  filter: {},
+  status: "idle",
 };
 
 export const tasksGridSlice = createSlice({
   name: "tasksGrid",
   initialState,
   reducers: {
+    fetchTasksInit(state) {
+      state.status = "loading";
+    },
     fetchTasksSuccess(state, action) {
       const tasks = action.payload as ITask[];
       state.tasks = tasks;
       state.status = "idle";
+      state.hasFetched = true;
     },
     fetchTasksFailure(state, action) {
       state.status = "failed";
-    },
-    setFilteredTasks(state, action) {
-      state.filteredTasks = action.payload as ITask[];
     },
     changeTaskStatus(state, action) {
       const index = state.tasks.findIndex(
         (task) => task.id === action.payload.id
       );
 
-      //making a new array
       const newTasks: ITask[] = [...state.tasks];
-
-      //changing value in the new array
       newTasks[index].isCompleted = action.payload.isCompleted;
 
       state.tasks = newTasks;
+      if (isFilterApplied(state.filter)) {
+        state.filteredTasks = state.tasks.filter((task: ITask) =>
+          isTaskMatchFilter(task, state.filter)
+        );
+      }
     },
+    filterTasks(state, action) {
+      const filter = action.payload as Filter;
+      state.filter = filter;
+
+      state.filteredTasks = state.tasks.filter((task: ITask) =>
+        isTaskMatchFilter(task, filter)
+      );
+    },
+    resetState: () => initialState,
   },
 });
 
 export const {
+  fetchTasksInit,
   fetchTasksSuccess,
   fetchTasksFailure,
-  setFilteredTasks,
   changeTaskStatus,
+  filterTasks,
+  resetState,
 } = tasksGridSlice.actions;
 
 export const fetchTasks =
   (params?: { title?: string; userId?: number; completed?: boolean }) =>
   async (dispatch: any) => {
+    dispatch(fetchTasksInit());
     try {
       const response = await axios.get("/todos", { params: { ...params } });
       const mappedTasks = response.data.map(
@@ -75,6 +96,8 @@ export const fetchTasks =
 
 export const selectTasks = (state: RootState) => state.tasks.tasks;
 export const selectStatus = (state: RootState) => state.tasks.status;
+export const selectTasksHasFetched = (state: RootState) =>
+  state.tasks.hasFetched;
 export const selectFilteredTasks = (state: RootState) =>
   state.tasks.filteredTasks;
 

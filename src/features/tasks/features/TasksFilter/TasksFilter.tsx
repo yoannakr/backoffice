@@ -1,66 +1,30 @@
-import { useEffect, useState } from "react";
+import { SearchOutlined } from "@ant-design/icons";
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { BOInput, Row, BOSelect } from "../../../../shared/components";
-import { ITask, TaskStatusType } from "../../../../types/tasks";
 import {
-  setFilteredTasks,
-  selectTasks,
+  BOButton,
+  BOInput,
+  BOSelect,
+  Col,
+} from "../../../../shared/components";
+import { TaskStatusType } from "../../../../types/tasks";
+import {
   fetchTasks,
+  filterTasks,
+  selectTasksHasFetched,
 } from "../TasksGrid/tasksGridSlice";
 import { useUsersOptions } from "./hooks/users/useUsersOptions";
-import { taskStatuses } from "./taskStatuses";
-import { SearchOutlined } from "@ant-design/icons";
 import styles from "./TasksFilter.module.scss";
-import { BOButton } from "../../../../shared/components";
+import { taskStatuses } from "./taskStatuses";
 
 export const TasksFilter = () => {
   const { usersOptions, loading } = useUsersOptions();
-
   const dispatch = useAppDispatch();
-  const tasks = useAppSelector(selectTasks);
+  const hasFetched = useAppSelector(selectTasksHasFetched);
 
   const [title, setTitle] = useState<string>();
   const [userId, setUserId] = useState<number>();
   const [status, setStatus] = useState<TaskStatusType>();
-
-  useEffect(() => {
-    dispatch(fetchTasks());
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    const filteredTasks = getFilteredTasks(tasks);
-
-    dispatch(setFilteredTasks(filteredTasks));
-    // eslint-disable-next-line
-  }, [tasks]);
-
-  const isTaskMatchFilter = (task: ITask): boolean => {
-    let isTaskMatchFilter = true;
-
-    if (title) {
-      isTaskMatchFilter = task.title.toLowerCase() === title.toLowerCase();
-    }
-
-    if (userId) {
-      isTaskMatchFilter = isTaskMatchFilter && task.userId === userId;
-    }
-
-    if (status) {
-      isTaskMatchFilter =
-        isTaskMatchFilter && task.isCompleted === getSelectedStatus();
-    }
-
-    return isTaskMatchFilter;
-  };
-
-  const getFilteredTasks = (tasks: ITask[]): ITask[] => {
-    const filteredTasks = tasks.filter((task: ITask) =>
-      isTaskMatchFilter(task)
-    );
-
-    return filteredTasks;
-  };
 
   const getSelectedStatus = () => {
     if (status) {
@@ -84,24 +48,26 @@ export const TasksFilter = () => {
     setStatus(status);
   };
 
-  const handleTaskSearch = () => {
-    const filteredTasks = getFilteredTasks(tasks);
+  const handleTaskSearch = async () => {
+    if (!hasFetched) {
+      await dispatch(fetchTasks());
+    }
 
-    dispatch(setFilteredTasks(filteredTasks));
+    dispatch(filterTasks({ title, userId, status: getSelectedStatus() }));
   };
 
   return (
     <div className={styles.FilterContainer}>
       <div className={styles.FilterFirstRow}>
-        <Row className={styles.Row}>
+        <Col className={styles.Row}>
           <BOInput
             label="Title"
             placeholder="Title"
             value={title}
             onChange={handleTitleChange}
           />
-        </Row>
-        <Row className={styles.Row}>
+        </Col>
+        <Col className={styles.Row}>
           <BOSelect
             label="User"
             placeholder="User"
@@ -110,8 +76,8 @@ export const TasksFilter = () => {
             loading={loading}
             onChange={handleUserChange}
           />
-        </Row>
-        <Row className={styles.Row}>
+        </Col>
+        <Col className={styles.Row}>
           <BOSelect
             label="Status"
             placeholder="Status"
@@ -119,7 +85,7 @@ export const TasksFilter = () => {
             options={taskStatuses}
             onChange={handleStatusChange}
           />
-        </Row>
+        </Col>
       </div>
       <BOButton
         icon={<SearchOutlined />}

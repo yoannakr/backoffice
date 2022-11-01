@@ -32,7 +32,7 @@ export const UserDetails = (props: UserDetailsOptions) => {
 
   useEffect(() => {
     form.resetFields();
-  }, [user]);
+  }, [user, form]);
 
   const onCancel = () => {
     form.resetFields();

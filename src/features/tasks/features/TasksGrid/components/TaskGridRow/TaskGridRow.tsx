@@ -9,6 +9,7 @@ import {
   CopyOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { useUpdateTaskStatus } from "./hooks/tasks/useUpdateTaskStatus";
 
 interface Props {
   task: ITask;
@@ -16,9 +17,15 @@ interface Props {
 export const TaskGridRow = (props: Props) => {
   const { task } = props;
   const dispatch = useAppDispatch();
+  const [updateTaskStatus] = useUpdateTaskStatus();
 
   const handleCopyUserId = () => {
     navigator.clipboard.writeText(task.userId.toString());
+  };
+
+  const onSuccessfulTaskUpdate = () => {
+    const newTask: ITask = { ...task, isCompleted: !task.isCompleted };
+    dispatch(changeTaskStatus(newTask));
   };
 
   const handleStatusChange = () => {
@@ -29,8 +36,7 @@ export const TaskGridRow = (props: Props) => {
         </span>
       ),
       onOk() {
-        const newTask: ITask = { ...task, isCompleted: !task.isCompleted };
-        dispatch(changeTaskStatus(newTask));
+        updateTaskStatus(task.id, !task.isCompleted, onSuccessfulTaskUpdate);
       },
     });
   };

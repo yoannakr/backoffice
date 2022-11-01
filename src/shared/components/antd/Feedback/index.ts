@@ -1,1 +1,1 @@
-export { Modal as BOModal, Spin as BOSpin } from "antd";
+export { Modal as BOModal, Spin as BOSpin, message as BOMessage } from "antd";

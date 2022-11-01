@@ -2,6 +2,7 @@ import { Input, InputProps } from "antd";
 
 interface Props {
   label?: string;
+  style?: React.CSSProperties;
   onChange?: (value: string) => void;
 }
 
@@ -15,7 +16,11 @@ export const BOInput = (props: BOInputProps) => {
   return (
     <>
       {props.label && <label>{props.label}</label>}
-      <Input {...props} onChange={onChange} />
+      <Input
+        {...props}
+        style={{ width: 250, display: "flex", ...props.style }}
+        onChange={onChange}
+      />
     </>
   );
 };

@@ -6,10 +6,6 @@ import { AxiosError } from "axios";
 interface Props {
   userId: number;
 }
-export interface IUserOption {
-  label: string;
-  value: string;
-}
 
 export const useUser = (props: Props) => {
   const { userId } = props;

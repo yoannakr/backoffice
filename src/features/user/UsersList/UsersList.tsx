@@ -27,6 +27,7 @@ export const UsersList = () => {
     dispatch(getUsersAsync()).then(() => {
       setMaxIndex(pageSize);
     });
+    // eslint-disable-next-line
   }, []);
 
   const onPaginationChange = (page: number) => {

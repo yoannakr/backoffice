@@ -1,1 +1,1 @@
-export { Row } from "antd";
+export { Row, Col } from "antd";
